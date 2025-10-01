@@ -19,6 +19,19 @@ Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 // Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove'); --- IGNORE ---
 
+// Dynamic cart items count route
+Route::get('/cart/count', function () {
+    $cart = session()->get('cart', []);
+    $count = 0;
+
+    if (!empty($cart)) {
+        $count = array_sum(array_column($cart, 'quantity'));
+    }
+
+    return response()->json(['count' => $count]);
+});
+
+
 // Order routes
 Route::post('/cart/place-order', [OrderController::class, 'placeOrder'])->name('cart.placeOrder');
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

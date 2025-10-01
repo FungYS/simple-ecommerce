@@ -11,18 +11,25 @@
     @endif
 
     <h2 class="text-2xl font-bold">Actions</h2>
-    <a href="{{ route('products.create') }}"
-       class="inline-block text-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        Add Product
-    </a>
+    <div class="inline-flex flex flex-wrap gap-3">
+        <div class="inline-block text-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            <a href="{{ route('products.create') }}">
+                Add Product
+            </a>
+        </div>
 
-    <a href="{{ route('cart.index') }}" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
-        View Cart
-    </a>
+        <div class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+            <a href="{{ route('cart.index') }}">
+                View Cart
+            </a>
+        </div>
 
-    <a href="{{ route('orders.index') }}" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-        View Orders
-    </a>
+        <div class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 w-fit">
+            <a href="{{ route('orders.index') }}">
+                View Orders
+            </a>
+        </div>
+    </div>
 
 </div>
 
@@ -49,7 +56,7 @@
                 <p class="text-sm text-gray-500">Stock: {{ $product->stock }}</p>
 
                 @if($product->stock != 0)
-                <form class="text-center" action="{{ route('cart.add', $product->id) }}" method="POST">
+                <form class="ajax-add-to-cart text-center" action="{{ route('cart.add', $product->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="mt-3 bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700 hover:cursor-pointer">
                         Add to Cart

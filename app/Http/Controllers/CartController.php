@@ -17,22 +17,38 @@ class CartController extends Controller
     // Add item to cart
     public function add(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
 
         $cart = session()->get('cart', []);
+        $cartModified = false;
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "name" => $product->name,
-                "price" => $product->price,
-                "quantity" => 1,
-                "image_path" => $product->image_path,
-            ];
+        // Add item to the session cart; if it already exists, increment its quantity
+        if ($product) {
+            if (isset($cart[$id])) {
+                $cart[$id]['quantity'] = (int)$cart[$id]['quantity'] + 1;
+            } else {
+                $cart[$id] = [
+                    "name" => $product->name,
+                    "price" => $product->price,
+                    "quantity" => 1,
+                    "image_path" => $product->image_path,
+                ];
+            }
+            $cartModified = true;
         }
 
-        session()->put('cart', $cart);
+        if ($cartModified) {
+            session()->put('cart', $cart);
+        }
+
+        $count = array_sum(array_column($cart, 'quantity'));
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Product added to cart',
+                'cartCount' => $count,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Product added to cart!');
     }

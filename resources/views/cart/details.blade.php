@@ -10,10 +10,10 @@
     <div class="block">
         <p class="text-gray-600 mb-4">Your cart is empty.</p>
 
-        <a href="{{ route('home') }}" 
+        <a href="{{ route('home') }}"
             class="block w-fit bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:cursor-pointer text-center">
             Add Items
-        </a>    
+        </a>
 
         @if(session('success'))
         <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4 mt-3">
@@ -34,7 +34,7 @@
         <tbody>
             @php $total = 0; @endphp
             @foreach($cart as $id => $item)
-            @php 
+            @php
                 $subtotal = $item['price'] * $item['quantity'];
                 $total += $subtotal;
             @endphp
@@ -44,7 +44,7 @@
                         @if($item['image_path'])
                             <img src="{{ asset('storage/' . $item['image_path']) }}" class="w-12 h-12 object-cover rounded">
                         @else
-                            <img 
+                            <img
                             src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" 
                             class="w-12 h-12 object-cover rounded">
                         @endif
@@ -72,13 +72,17 @@
         <h3 class="text-xl font-bold">Total: RM {{ number_format($total, 2) }}</h3>
 
         <div class="flex gap-3 justify-end">
-            <a href="{{ route('cart.clear') }}" 
-                class="mt-2 inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            <a href="{{ route('home') }}"
+                class="inline-block w-fit bg-blue-600 text-white mt-2 px-4 py-2 rounded hover:bg-blue-700 hover:cursor-pointer text-center">
+                Add More Items
+            </a>
+            <a href="{{ route('cart.clear') }}"
+                class="mt-2 inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 hover:cursor-pointer">
                 Clear Cart
             </a>
             <form action="{{ route('cart.placeOrder') }}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="mt-2 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <button type="submit" class="mt-2 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                     Place Order
                 </button>
             </form>
