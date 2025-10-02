@@ -29,6 +29,7 @@
                 <th class="p-2 border">Price</th>
                 <th class="p-2 border">Quantity</th>
                 <th class="p-2 border">Subtotal</th>
+                <th class="p-2 border">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -39,34 +40,69 @@
                 $total += $subtotal;
             @endphp
             <tr class="flex flex-col md:table-row mb-4 md:mb-0 bg-white md:bg-transparent shadow md:shadow-none rounded md:rounded-none overflow-hidden">
+                <!-- Image + Name -->
                 <td class="p-2 border md:table-cell">
                     <div class="flex items-center space-x-2">
                         @if($item['image_path'])
                             <img src="{{ asset('storage/' . $item['image_path']) }}" class="w-12 h-12 object-cover rounded">
                         @else
                             <img
-                            src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" 
+                            src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
                             class="w-12 h-12 object-cover rounded">
                         @endif
                         <span class="text-ellipsis">{{ $item['name'] }}</span>
                     </div>
                 </td>
+
+                <!-- Price -->
                 <td class="p-2 border md:table-cell flex justify-between md:justify-center items-center">
-                <span class="font-semibold md:hidden">Price:</span>
-                RM {{ number_format($item['price'], 2) }}
+                    <span class="font-semibold md:hidden">Price:</span>
+                    RM {{ number_format($item['price'], 2) }}
                 </td>
+
+                <!-- Quantity -->
                 <td class="p-2 border md:table-cell flex justify-between md:justify-center items-center">
-                <span class="font-semibold md:hidden">Quantity:</span>
-                {{ $item['quantity'] }}
+                    <span class="font-semibold md:hidden">Quantity:</span>
+
+                    <form action="{{ route('cart.updateQty', $id) }}" method="POST" class="flex items-center justify-center space-x-2">
+                        @csrf
+                        <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1"
+                            class="w-16 border rounded px-1 py-1.5 text-center">
+                        <button type="submit"
+                                class="bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600 hover:cursor-pointer">
+                            Update
+                        </button>
+                    </form>
                 </td>
+
+                <!-- Subtotal -->
                 <td class="p-2 border md:table-cell flex justify-between md:justify-center items-center">
-                <span class="font-semibold md:hidden">Subtotal:</span>
-                RM {{ number_format($subtotal, 2) }}
+                    <span class="font-semibold md:hidden">Subtotal:</span>
+                    RM {{ number_format($subtotal, 2) }}
+                </td>
+
+                <!-- Actions -->
+                <td class="p-2 border md:table-cell text-center">
+                    <form action="{{ route('cart.remove', $id) }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                                class="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 hover:cursor-pointer">
+                            Remove
+                        </button>
+                    </form>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+
+    @if($errors->any())
+        <div class="bg-red-100 text-red-800 px-4 py-2 rounded my-4">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
 
     <div class="mt-4 text-right">
         <h3 class="text-xl font-bold">Total: RM {{ number_format($total, 2) }}</h3>

@@ -18,12 +18,6 @@
             </a>
         </div>
 
-        <div class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
-            <a href="{{ route('cart.index') }}">
-                View Cart
-            </a>
-        </div>
-
         <div class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 w-fit">
             <a href="{{ route('orders.index') }}">
                 View Orders

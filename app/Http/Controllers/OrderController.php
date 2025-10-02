@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItem;
 
 class OrderController extends Controller
@@ -24,7 +25,19 @@ class OrderController extends Controller
 
         // Calculate total
         $total = 0;
-        foreach ($cart as $item) {
+
+        // Check stock for each product
+        foreach ($cart as $productId => $item) {
+            $product = Product::find($productId);
+
+            if (!$product) {
+                return redirect()->route('cart.index')->withErrors(['order' => "Product not found: {$item['name']}"]);
+            }
+
+            if ($product->stock < $item['quantity']) {
+                return redirect()->route('cart.index')->withErrors(['order' => "Not enough stock for {$product->name}. Available: {$product->stock}"]);
+            }
+
             $total += $item['price'] * $item['quantity'];
         }
 
@@ -42,6 +55,11 @@ class OrderController extends Controller
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
+
+            // Deduct stock from product
+            $product = Product::find($id);
+            $product->stock -= $item['quantity'];
+            $product->save();
         }
 
         // Clear cart

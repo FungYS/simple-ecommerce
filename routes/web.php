@@ -16,8 +16,9 @@ Route::get('/', [ProductController::class, 'index'])->name(name: 'home'); // hom
 // Cart routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/{id}/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');
+Route::post('/cart/{id}/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
-// Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove'); --- IGNORE ---
 
 // Dynamic cart items count route
 Route::get('/cart/count', function () {

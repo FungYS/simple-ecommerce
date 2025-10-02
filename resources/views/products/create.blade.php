@@ -38,13 +38,13 @@
         </div>
         <div class="flex gap-3">
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:cursor-pointer">Add Product</button>
-            <a href="{{ route('home') }}" 
+            <a href="{{ route('home') }}"
             class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hover:cursor-pointer hover:cursor-pointer flex text-center">
                 Go Back to Home
             </a>
         </div>
     </form>
-    
+
     @if(session('success'))
     <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4 mt-3">
         {{ session('success') }}
