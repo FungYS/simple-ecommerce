@@ -27,7 +27,7 @@
 
 </div>
 
-<h2 class="text-2xl font-bold mb-4">Product Catalogue</h2>
+<h2 class="text-2xl font-bold mb-4">Product Catalogue Test</h2>
 <form action="{{ route('home') }}" method="GET" class="mb-6 flex gap-2">
     <input type="text"
            name="search"
