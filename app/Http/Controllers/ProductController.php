@@ -15,7 +15,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::latest()->get(); // fetch all, newest first
+        $products = Product::latest()->paginate(12); // fetch all, newest first
         return view('home', compact('products'));
     }
 
