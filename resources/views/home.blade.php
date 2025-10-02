@@ -28,6 +28,24 @@
 </div>
 
 <h2 class="text-2xl font-bold mb-4">Product Catalogue</h2>
+<form action="{{ route('home') }}" method="GET" class="mb-6 flex gap-2">
+    <input type="text"
+           name="search"
+           value="{{ request('search') }}"
+           placeholder="Search products name and description..."
+           class="border px-3 py-2 rounded w-full md:w-1/3">
+    <button type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:cursor-pointer">
+        Search
+    </button>
+
+    @if(request('search'))
+        <a href="{{ route('home') }}"
+           class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+            Clear
+        </a>
+    @endif
+</form>
 
 @if($products->isEmpty())
     <p class="text-gray-600">No products available.</p>

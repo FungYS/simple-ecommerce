@@ -13,9 +13,23 @@ class ProductController extends Controller
         return view('products.create'); // 👈 points to resources/views/products/create.blade.php
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->paginate(12); // fetch all, newest first
+        $query = Product::query();
+
+        // If search exists, filter products
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        // Order newest first, paginate 12 per page
+        $products = $query->latest()->paginate(12);
+
+        // Keep search keyword in pagination links
+        $products->appends($request->only('search'));
+
         return view('home', compact('products'));
     }
 
