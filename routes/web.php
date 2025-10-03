@@ -8,6 +8,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+
 // Product routes
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create'); // go to create product form page
 Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit'); // go to edit product form page

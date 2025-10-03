@@ -118,7 +118,7 @@
             </a>
             <form action="{{ route('cart.placeOrder') }}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="mt-2 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                <button type="submit" class="mt-2 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 hover:cursor-pointer">
                     Place Order
                 </button>
             </form>

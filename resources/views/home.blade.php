@@ -12,6 +12,11 @@
 
     <h2 class="text-2xl font-bold">Actions</h2>
     <div class="inline-flex flex flex-wrap gap-3">
+        <div class="inline-block text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+            <a href="{{ route('about') }}">
+                About
+            </a>
+        </div>
         <div class="inline-block text-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
             <a href="{{ route('products.create') }}">
                 Add Product
