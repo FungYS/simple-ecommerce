@@ -10,6 +10,8 @@ Route::get('/', function () {
 
 // Product routes
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create'); // go to create product form page
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit'); // go to edit product form page
+Route::patch('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store'); // handle form submission
 Route::get('/', [ProductController::class, 'index'])->name(name: 'home'); // home page showing products
 

@@ -27,7 +27,7 @@
 
 </div>
 
-<h2 class="text-2xl font-bold mb-4">Product Catalogue Test</h2>
+<h2 class="text-2xl font-bold mb-4">Product Catalogue</h2>
 <form action="{{ route('home') }}" method="GET" class="mb-6 flex gap-2">
     <input type="text"
            name="search"
@@ -67,22 +67,32 @@
                 <p class="mt-2 font-semibold">RM {{ number_format($product->price, 2) }}</p>
                 <p class="text-sm text-gray-500">Stock: {{ $product->stock }}</p>
 
-                @if($product->stock != 0)
-                <form class="ajax-add-to-cart text-center" action="{{ route('cart.add', $product->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="mt-3 bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700 hover:cursor-pointer">
-                        Add to Cart
-                    </button>
-                </form>
-                @else
-                <button class="text-center w-fit mt-3 mx-auto bg-gray-200 px-3 py-2 rounded cursor-not-allowed" disabled>Out of stock!</button>
-                @endif
+                <div class="flex gap-3 justify-center mt-3 items-center">
+                    @if($product->stock != 0)
+                        <form class="ajax-add-to-cart text-center" action="{{ route('cart.add', $product->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700 hover:cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </form>
+                    @else
+                        <button class="bg-gray-200 text-center px-3 py-2 rounded cursor-not-allowed" disabled>
+                            Out of stock!
+                        </button>
+                    @endif
+
+                    <a class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-fit" href="{{ route('products.edit', $product->id) }}">
+                        Edit
+                    </a>
+                </div>
             </div>
+
         @endforeach
     </div>
 
     <div class="mt-4">
         {{ $products->links() }}
     </div>
+
 @endif
 @endsection
